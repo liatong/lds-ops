@@ -4,11 +4,15 @@ import (
 	"net/http"
 	"fmt"
 	"os"
+	"crypto/md5"
+	"encoding/hex"
+	"io"
 	"path/filepath"
 	"github.com/gin-gonic/gin"
+	"time"
 )
 
-
+const uploadBase = "/tmp/upload"
 
 func Pong(c *gin.Context) {
 		c.String(http.StatusOK, "Hello word! Ping Pong!")
@@ -58,10 +62,10 @@ func IsDir(name string) bool {
 }
 
 func UploadFile(c *gin.Context){
-	//application := c.PostForm("application")
-	//version := c.PostForm("version")
-	application := "admin-service"
-	version := "1.0"
+	application := c.PostForm("application")
+	version := c.PostForm("version")
+	//application := "admin-service"
+	//version := "1.0"
 
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -70,7 +74,7 @@ func UploadFile(c *gin.Context){
 	}
 
 	filename := filepath.Base(file.Filename)
-	filepath := "/tmp/upload/"+application+"/"+version
+	filepath := uploadBase+"/"+application+"/"+version
 
 	if !IsDir(filepath){
 		err = os.MkdirAll(filepath,0755)
@@ -87,10 +91,29 @@ func UploadFile(c *gin.Context){
 			c.String(http.StatusBadRequest, fmt.Sprintf("upload file err: %s", err.Error()))
 			return
 	}
+	t := time.Now()
+	uploadTime := t.Unix()
+	fileMd5,_ := GetFileMd5(filefullpath)
 
-	c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields application=%s and version=%s.",filename, application, version))
+	c.String(http.StatusOK, fmt.Sprintf("File %s uploaded successfully with fields application=%s and version=%s. md5sum=%s, uploadTime=%d",filename, application, version,fileMd5,uploadTime))
 }
 
+func GetFileMd5(filename string) (string, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("os Open error")
+		return "", err
+	}
+	defer file.Close()
 
+	md5 := md5.New()
+	_, err = io.Copy(md5, file)
+	if err != nil {
+		fmt.Println("io copy error")
+		return "", err
+	}
+	md5Str := hex.EncodeToString(md5.Sum(nil))
+	return md5Str, nil
+}
 
 
