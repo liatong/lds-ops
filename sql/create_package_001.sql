@@ -1,0 +1,2 @@
+CREATE SCHEMA `lds_ops` DEFAULT CHARACTER SET utf8mb4 ;
+

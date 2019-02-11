@@ -10,9 +10,42 @@ import (
 	"path/filepath"
 	"github.com/gin-gonic/gin"
 	"time"
+	"github.com/liatong/lds-ops/sql"
+
 )
 
+/*
+func newPool() *sql.DB {
+	
+	db, err := sql.Open("mysql","root:Password@tcp(127.0.0.1:3306)/lds_ops")
+	if err != nil {
+		fmt.Println("mysql error")
+	}
+	if err := db.Ping(); err != nil {
+		fmt.Println("mysql error")
+	}
+	return db
+}
+
+var pool = newPool()
+
+
+var pool *sql.DB
+func init() {
+	var err error
+	pool, err = sql.Open("mysql","root:Password@tcp(127.0.0.1:3306)/lds_ops")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	err = pool.Ping()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+}
+*/
+
 const uploadBase = "/tmp/upload"
+
 
 func Pong(c *gin.Context) {
 		c.String(http.StatusOK, "Hello word! Ping Pong!")
@@ -60,7 +93,37 @@ func IsDir(name string) bool {
 
     return fi.IsDir()
 }
+//---- 测试database/sql ----//
+type User struct {
+	ID   int64
+	Name string
+}
 
+
+func InsertUser(c *gin.Context){
+	name := c.Params.ByName("name")
+	// 测试插入用户信息
+	res, err := sql.Pool.Exec("insert into `test_name` (`name`) values (?)", name)
+	fmt.Println(res.LastInsertId()) 
+	if err != nil {
+		c.String(http.StatusBadRequest, fmt.Sprintf("can't insert into mysql: %s",err.Error()))
+		return
+	}
+	
+	c.String(http.StatusOK, fmt.Sprintf("name:%s",name))
+}
+
+func DeleteUser(c *gin.Context){
+	name := c.Params.ByName("name")
+	_, err := sql.Pool.Exec("delete from `test_name` where `name` = ?", name)
+	if err != nil {
+		return 
+	}
+	c.String(http.StatusOK, fmt.Sprintf("delete user:%s",name))
+}
+
+
+//-----------完成database/sql数据库操作测试--------//
 func UploadFile(c *gin.Context){
 	application := c.PostForm("application")
 	version := c.PostForm("version")

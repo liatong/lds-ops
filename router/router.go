@@ -5,13 +5,27 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/liatong/lds-ops/handler"
+
 )
 
+
+func TestMiddle() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		
+		// Set example variable
+		c.Set("example", "12345")
+		//c.Set("db",&pool)
+		// before request
+
+		c.Next()
+	}
+}
 
 func SetupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.Default()
+	r.Use(TestMiddle())
 
 	r.StaticFS("/download",http.Dir("/tmp/upload"))
 	r.Static("/file","./file")
@@ -23,7 +37,10 @@ func SetupRouter() *gin.Engine {
 
 	// Get user value
 	r.GET("/user/:name", handler.GetUser)
-
+	// Insert user 
+	r.GET("/insert/:name", handler.InsertUser)
+	r.GET("/query/:name", handler.QueryUser)
+	r.GET("/delete/:name", handler.DeleteUser)
 	// Authorized group (uses gin.BasicAuth() middleware)
 	// Same than:
 	// authorized := r.Group("/")
