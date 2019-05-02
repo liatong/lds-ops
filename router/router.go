@@ -36,7 +36,7 @@ func SetupRouter() *gin.Engine {
 	r.GET("/ping",handler.Pong)
 
 	// Get user value
-	r.GET("/user/:name", handler.GetUser)
+	//r.GET("/user/:name", handler.GetUser)
 	// Insert user 
 	r.GET("/insert/:name", handler.InsertUser)
 	r.GET("/query/:name", handler.QueryUser)
@@ -58,6 +58,7 @@ func SetupRouter() *gin.Engine {
 	}
 
 	r.POST("/upload",handler.UploadFile)
+	//r.POST("/test/UploadFile",handler.TestUploadFile)
 	r.GET("/index",handler.IndexHtml)
 	r.GET("/code",handler.CodeHtml)
 	

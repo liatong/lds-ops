@@ -21,6 +21,7 @@ func (u *User) QueryUser(name string)(users []User,err error ){
 
 	for rows.Next() {
 		var user User
+
 		rows.Scan(&user.Id, &user.Name)
 		users = append(users, user)
 	}
@@ -30,3 +31,10 @@ func (u *User) QueryUser(name string)(users []User,err error ){
 	return  
 	
 }
+/*
+//这里如果使用meddler的话，那么我们对与新增这种动作就不必要再重新自定义一个函数来处理了。仅需要直接使用meddler即可。
+
+func (u *User) AddUser(){
+
+}
+*/
