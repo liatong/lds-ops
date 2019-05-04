@@ -48,6 +48,7 @@ func SetupRouter() *gin.Engine {
 	//	  "foo":  "bar",
 	//	  "manu": "123",
 	//}))
+
 	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
 		"foo":  "bar", // user:foo password:bar
 		"manu": "123", // user:manu password:123
@@ -58,7 +59,11 @@ func SetupRouter() *gin.Engine {
 	}
 
 	r.POST("/upload",handler.UploadFile)
+	r.POST("/package",handler.LishPackage)
 	//r.POST("/test/UploadFile",handler.TestUploadFile)
+
+
+	r.GET("/packagelist",handler.PackageHtml)
 	r.GET("/index",handler.IndexHtml)
 	r.GET("/code",handler.CodeHtml)
 	

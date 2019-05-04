@@ -42,7 +42,9 @@ func IndexHtml(c *gin.Context) {
 func CodeHtml(c *gin.Context) {
 		c.HTML(http.StatusOK, "upload.html","")
 }
-
+func PackageHtml(c *gin.Context){
+		c.HTML(http.StatusOK,"package.html","")
+}
 
 /************ Handler *********/
 var db = make(map[string]string)
