@@ -35,37 +35,22 @@ func SetupRouter() *gin.Engine {
 	// Ping test
 	r.GET("/ping",handler.Pong)
 
-	// Get user value
-	//r.GET("/user/:name", handler.GetUser)
-	// Insert user 
-	r.GET("/insert/:name", handler.InsertUser)
-	r.GET("/query/:name", handler.QueryUser)
-	r.GET("/delete/:name", handler.DeleteUser)
-	// Authorized group (uses gin.BasicAuth() middleware)
-	// Same than:
-	// authorized := r.Group("/")
-	// authorized.Use(gin.BasicAuth(gin.Credentials{
-	//	  "foo":  "bar",
-	//	  "manu": "123",
-	//}))
-
-	authorized := r.Group("/", gin.BasicAuth(gin.Accounts{
-		"foo":  "bar", // user:foo password:bar
-		"manu": "123", // user:manu password:123
-	}))
-	{
-		authorized.POST("admin",handler.AuthUser)
-
-	}
-
 	r.POST("/upload",handler.UploadFile)
 	r.POST("/package",handler.LishPackage)
 	//r.POST("/test/UploadFile",handler.TestUploadFile)
+
+ 	//处理数据脚本
+ 	r.POST("/dbscript",handler.UploadScript)
+ 	/*
+ 	r.POST("/dbscriptlist",handler.ScriptList)
+ 	r.POST("/dbscript/exechistory",handler.DbExecHistory)
+	*/
 
 
 	r.GET("/packagelist",handler.PackageHtml)
 	r.GET("/index",handler.IndexHtml)
 	r.GET("/code",handler.CodeHtml)
+	r.GET("dbupload",handler.DbuploadHtml)
 	
 
 	return r

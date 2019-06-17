@@ -2,14 +2,14 @@
 
 $(document).ready(function(){
 
-  $("#upload").bind("click",function () {
+  $("#uploaddb").bind("click",function () {
     // body...
-    console.log("hello world.")
+    console.log("upload db script.")
     $.ajax({
-        url: '/upload',
+        url: '/dbscript',
         type: 'POST',
         cache: false,
-        data: new FormData($('#uploadForm')[0]),
+        data: new FormData($('#uploadDBForm')[0]),
         processData: false,
         contentType: false
     }).success(function(data) {
@@ -21,6 +21,6 @@ $(document).ready(function(){
     }); 
     //end 
   });
-
+ 
 
 });

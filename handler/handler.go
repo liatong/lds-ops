@@ -29,7 +29,7 @@ func init() {
 }
 */
 
-const uploadBase = "/tmp/upload"
+const uploadBase = "/data/ldsops/package/upload"
 
 /*  load  html web */
 func Pong(c *gin.Context) {
@@ -44,6 +44,9 @@ func CodeHtml(c *gin.Context) {
 }
 func PackageHtml(c *gin.Context){
 		c.HTML(http.StatusOK,"package.html","")
+}
+func DbuploadHtml(c *gin.Context){
+		c.HTML(http.StatusOK,"dbupload.html","")
 }
 
 /************ Handler *********/

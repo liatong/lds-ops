@@ -25,7 +25,8 @@
     <script src="../static/ie-emulation-modes-warning.js"></script>
 
      <script src="../static/jquery.min.js"></script>
-     <script src="../static/upload.js"></script>
+     <script src="../static/uploaddb.js"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -86,25 +87,33 @@
              
           </form-->
             <!--form method="POST" action="/test/UploadFile" enctype="multipart/form-data"-->
-            <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data"> 
+            <form id="uploadDBForm" method="POST" action="/dbscript" enctype="multipart/form-data"> 
                 <div class="form-group">
-                  <label for="application">Application</label>
-                  <input type="text" class="form-control" name="application" placeholder="文件项目名称">
+                  <label for="scriptname">ScriptName</label>
+                  <input type="text" class="form-control" name="scriptname" placeholder="脚本名称">
                 </div>
                 <div class="form-group">
-                  <label for="enviroment">Enviroment</label>
-                  <input type="text" class="form-control" name="enviroment" placeholder="环境信息">
+                  <label for="appname">Application</label>
+                  <input type="text" class="form-control" name="appname" placeholder="关联应用">
                 </div>
                 <div class="form-group">
-                  <label for="version">Version</label>
-                  <input type="text" class="form-control" name="version" placeholder="代码版本号">
+                  <label for="appversion">AppVersion</label>
+                  <input type="text" class="form-control" name="appversion" placeholder="关联应用版本">
+                </div>
+                 <div class="form-group">
+                  <label for="branch">Branch</label>
+                  <input type="text" class="form-control" name="branch" placeholder="分支">
+                </div>
+                <div class="form-group">
+                  <label for="comment">Comment</label>
+                  <input type="text" class="form-control" name="comment" placeholder="备注">
                 </div>
                 <div class="form-group">
                   <label for="exampleInputFile">File input</label>
                   <input type="file" name="file" id="exampleInputFile">
                   <p class="help-block">Example block-level help text here.</p>
                 </div>
-                <button id="upload" type="button" class="btn btn-default">Submit</button>
+                <button id="uploaddb" type="button" class="btn btn-default">Submit</button>
                 <!--button type="submit" class="btn btn-default">Submit</button-->
             </form>
           </div>
