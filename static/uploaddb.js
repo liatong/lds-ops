@@ -14,7 +14,8 @@ $(document).ready(function(){
         contentType: false
     }).success(function(data) {
         console.log("success");
-        alert("文件上传成功");
+        alert("数据库脚本文件上传成功");
+        window.location.href = "/dbscript";
     }).error(function() {
         console.log("fail");
         alert("文件上传失败。");

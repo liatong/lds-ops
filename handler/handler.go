@@ -45,6 +45,9 @@ func CodeHtml(c *gin.Context) {
 func PackageHtml(c *gin.Context){
 		c.HTML(http.StatusOK,"package.html","")
 }
+func DbscriptHTMl(c *gin.Context){
+		c.HTML(http.StatusOK,"dbscript.html","")
+}
 func DbuploadHtml(c *gin.Context){
 		c.HTML(http.StatusOK,"dbupload.html","")
 }
