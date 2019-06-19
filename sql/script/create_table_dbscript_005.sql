@@ -8,3 +8,4 @@ CREATE TABLE `lds_ops`.`ops_dbscript` (
 ) COMMENT='对应服务的数据库脚本';
 
 ALTER TABLE `lds_ops`.`ops_dbscript` ADD COLUMN `branch` varchar(50) AFTER `filepath`, ADD COLUMN `comment` varchar(150) AFTER `branch`;
+ALTER TABLE `lds_ops`.`ops_dbscript` ADD COLUMN `version` varchar(50) NOT NULL AFTER `comment`, DROP PRIMARY KEY, ADD PRIMARY KEY (`scriptname`, `app`, `appversion`, `version`);

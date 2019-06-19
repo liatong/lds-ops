@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"os"
 	"time"
+	"strings"
 	"github.com/liatong/lds-ops/model"
 
 
@@ -15,8 +16,9 @@ const db_uploadBase = "/data/ldsops/dbscript/upload"
 
 func UploadScript(c *gin.Context){
 
-	scriptname := c.PostForm("scriptname")
-	application := c.PostForm("appname")
+	scriptname := strings.Replace(c.PostForm("scriptname"), " ", "", -1)  
+	dbversion := strings.Replace(c.PostForm("dbversion"), " ", "", -1)  
+	application := strings.Replace(c.PostForm("appname"), " ", "", -1) 
 	version := c.PostForm("appversion")
 	branch := c.PostForm("branch")
 	comment := c.PostForm("comment")
@@ -45,12 +47,12 @@ func UploadScript(c *gin.Context){
 	
 	t := time.Now().Format("2006-01-02 15:04:05.000")
 
-	dbscript := model.Dbscript{scriptname,application,version,branch,filefullpath,t,comment}
+	dbscript := model.Dbscript{scriptname,dbversion,application,version,branch,filefullpath,t,comment}
 	err = dbscript.UploadDbcheck()
 	if err != nil {
 		fmt.Println("Upload dbscript  error:%s",err)
 	}
-	c.String(http.StatusOK, fmt.Sprintf("Uploaded successfully with dbscript=%s and app=%s app version=%s.",filename, application, version,))
+	c.String(http.StatusOK, fmt.Sprintf("Uploaded successfully with dbscript=%s  dbversion=%s and app=%s app version=%s.",filename,dbversion, application, version,))
 	
 }
 
