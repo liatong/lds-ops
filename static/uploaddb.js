@@ -18,7 +18,7 @@ $(document).ready(function(){
         window.location.href = "/dbscript";
     }).error(function() {
         console.log("fail");
-        alert("文件上传失败。");
+        alert("数据库文件上传失败。");
     }); 
     //end 
   });
